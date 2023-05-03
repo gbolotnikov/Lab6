@@ -3,34 +3,6 @@
 #include <iostream>
 #include "Matrix.hpp"
 
-class CMatrix {
-public:
-    class CRow {
-        friend class CMatrix;
-    public:
-        int& operator[](int col)
-        {
-            return parent.arr[row][col];
-        }
-    private:
-        CRow(CMatrix &parent_, int row_) : 
-            parent(parent_),
-            row(row_)
-        {}
-
-        CMatrix& parent;
-        int row;
-    };
-
-    CRow operator[](int row)
-    {
-        return CRow(*this, row);
-    }
-private:
-    int rows, cols;
-    int **arr;
-};
-
 int main() {
     Matrix<int16_t, -1> matrix;
 
@@ -38,7 +10,7 @@ int main() {
     assert(a == -1); 
     assert(matrix.size() == 0); 
     // создание эл-та
-    matrix[100][100] = 314; 
+    matrix[100][100] = 314;
     assert(matrix[100][100] == 314); 
     assert(matrix.size() == 1);
     // удаление эл-та
@@ -65,8 +37,8 @@ int main() {
     std::cout << "======Вывод заполненных элементов=====" << std::endl;
      for (auto tuple = matrix.begin(); tuple != matrix.end(); ++tuple) {
         int16_t x; size_t i; size_t j;
-        std::tie(x, i, j) = *tuple;
-        std::cout << "value = " << x << ", i = " << i << ", j = " << j << std::endl;
+        std::tie(i, j, x) = *tuple;
+        std::cout << "i = " << i << ", j = " << j << ", value = " << x << std::endl;
      }
 
     return 0;
